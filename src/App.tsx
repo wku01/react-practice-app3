@@ -11,6 +11,11 @@ const quizData: Quiz[] = [
     answer: '男性'
   },
   {
+    question: 'わくいの好きなものは？',
+    options: ['肉', 'おんな', 'バイク', 'ゲーム'],
+    answer: 'ゲーム'
+  },
+  {
     question: 'わくいの好きなタイプは？',
     options: ['キュート', 'クール', 'ギャル', 'いぬ'],
     answer: 'クール'
