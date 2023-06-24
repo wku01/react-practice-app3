@@ -1,18 +1,13 @@
 import React from 'react';
 import { Button, Typography, Box } from '@mui/material';
+import {Quiz} from './types'
 
-interface Quiz {
-  question: string;
-  options: string[];
-  answer: string;
-}
-
-interface QuizComponentProps {
+type Props = {
   quiz: Quiz;
   handleAnswer: (isCorrect: boolean) => void;
 }
 
-const QuizComponent: React.FC<QuizComponentProps> = ({ quiz, handleAnswer }) => {
+const QuizComponent: React.FC<Props> = ({ quiz, handleAnswer }) => {
   const handleOptionClick = (option: string) => {
     handleAnswer(option === quiz.answer);
   };

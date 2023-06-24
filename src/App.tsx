@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Card, CardContent, Dialog, DialogTitle, Box, DialogActions } from '@mui/material';
 import QuizComponent from './quiz-component';
-
-interface Quiz {
-  question: string;
-  options: string[];
-  answer: string;
-}
+import {Quiz} from './types'
+import DialogComp from './components/DialogComp'
 
 const quizData: Quiz[] = [
   {
@@ -54,29 +50,7 @@ const App: React.FC = () => {
       <Card sx={{ minWidth: 275 }}>
         <CardContent>
           <QuizComponent quiz={quizData[currentQuestionIndex]} handleAnswer={handleAnswer} />
-          <Dialog
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title">
-              {isAllClear ? 'オールクリア！' : (isCorrect ? '正解です！' : '不正解です。')}
-            </DialogTitle>
-            <DialogActions>
-              {isAllClear ? (
-                <Button onClick={handleClose}>最初へ戻る</Button>
-              ) : (
-                <>
-                  {isCorrect ? (
-                    <Button onClick={handleClose}>次の問題へ</Button>
-                  ) : (
-                    <Button onClick={handleClose}>戻る</Button>
-                  )}
-                </>
-              )}
-            </DialogActions>
-          </Dialog>
+          <DialogComp isAllClear={isAllClear} isCorrect={isCorrect} open={open} handleClose={handleClose} />
         </CardContent>
       </Card>
     </Box>
