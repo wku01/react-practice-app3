@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Card, CardContent, Dialog, DialogTitle, Box, DialogActions } from '@mui/material';
+import {Card, CardContent, Box,} from '@mui/material';
 import QuizComponent from './quiz-component';
 import {Quiz} from './types'
 import DialogComp from './components/DialogComp'
