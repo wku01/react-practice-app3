@@ -1,33 +1,16 @@
 import React, { useState } from 'react';
-import {Card, CardContent, Box,} from '@mui/material';
+import { Card, CardContent, Box, Button } from '@mui/material';
 import QuizComponent from './quiz-component';
-import {Quiz} from './types'
-import DialogComp from './components/DialogComp'
-
-const quizData: Quiz[] = [
-  {
-    question: 'わくいの種別は？',
-    options: ['男性', '女性', 'ねこ', 'いぬ'],
-    answer: '男性'
-  },
-  {
-    question: 'わくいの好きなものは？',
-    options: ['肉', 'おんな', 'バイク', 'ゲーム'],
-    answer: 'ゲーム'
-  },
-  {
-    question: 'わくいの好きなタイプは？',
-    options: ['キュート', 'クール', 'ギャル', 'いぬ'],
-    answer: 'クール'
-  },
-  // other questions...
-];
+import DialogComp from './components/DialogComp';
+import { QuizCategory } from './types';
+import quizData from './components/quiz-date';
 
 const App: React.FC = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [isCorrect, setIsCorrect] = useState(false);
   const [isAllClear, setIsAllClear] = useState(false);
   const [open, setOpen] = useState(false);
+  const [quizCategory, setQuizCategory] = useState<QuizCategory | null>(null);
 
   const handleAnswer = (isCorrect: boolean) => {
     setIsCorrect(isCorrect);
@@ -39,8 +22,9 @@ const App: React.FC = () => {
     if (isAllClear) {
       setCurrentQuestionIndex(0);
       setIsAllClear(false);
+      setQuizCategory(null); // リセットクイズカテゴリ
     } else if (isCorrect) {
-      if (currentQuestionIndex === quizData.length - 1) {
+      if (currentQuestionIndex === quizData[quizCategory!].length - 1) {
         setIsAllClear(true);
       } else {
         setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -49,7 +33,19 @@ const App: React.FC = () => {
     setIsCorrect(false);
   };
 
-  return (
+  return quizCategory === null ? (
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      minHeight="100vh"
+      bgcolor="#f5f5f5"
+    >
+      <Button onClick={() => setQuizCategory('わくいについて')}>わくいについて</Button>
+      <Button onClick={() => setQuizCategory('バイクについて')}>バイクについて</Button>
+      {/* other buttons... */}
+    </Box>
+  ) : (
     <Box
       display="flex"
       justifyContent="center"
@@ -59,7 +55,7 @@ const App: React.FC = () => {
     >
       <Card sx={{ minWidth: 275 }}>
         <CardContent>
-          <QuizComponent quiz={quizData[currentQuestionIndex]} handleAnswer={handleAnswer} />
+          <QuizComponent quiz={quizData[quizCategory][currentQuestionIndex]} handleAnswer={handleAnswer} />
           <DialogComp isAllClear={isAllClear} isCorrect={isCorrect} open={open} handleClose={handleClose} />
         </CardContent>
       </Card>
